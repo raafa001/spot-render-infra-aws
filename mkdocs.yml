@@ -1,0 +1,3 @@
+site_name: Spot Render Infra Docs
+nav:
+  - Overview: index.md
