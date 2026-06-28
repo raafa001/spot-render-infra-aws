@@ -49,6 +49,7 @@ terraform apply -var-file=terraform.tfvars
 - **Secrets Manager** para tokens (API, Sonar, CLI).  
 - **IRSA** para API, Portal e Argo Workers acessarem S3/Secrets.  
 - **Ingress + WAF** (ingress-nginx/ALB) com TLS e regras OWASP.  
+- **FinOps**: node group de workers configurado como **Spot** com fallback on-demand, Cluster Autoscaler habilitado e policies para desligar nós sem jobs; os buckets Input/Error possuem lifecycle para expirar artefatos após o prazo configurado.
 - **HPA** não gerado no Terraform (arquiteto via manifests Kubernetes), mas outputs expõem nomes/ARNs necessários.
 
 ### Requisitos
