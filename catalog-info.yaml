@@ -1,0 +1,13 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: spot-render-infra-aws
+  description: Terraform stack provisioning VPC, EKS, S3, Secrets Manager, IRSA and ingress/WAF.
+  tags:
+    - terraform
+    - aws
+spec:
+  type: infrastructure
+  lifecycle: experimental
+  owner: group:spot-render-team
+  system: spot-render
