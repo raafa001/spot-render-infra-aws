@@ -5,4 +5,11 @@ terraform {
     region = "us-east-1"
     encrypt = true
   }
+
+  required_providers {
+    random = {
+      source = "hashicorp/random"
+      version = "~> 3.5"
+    }
+  }
 }
