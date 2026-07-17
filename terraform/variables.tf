@@ -66,3 +66,39 @@ variable "domain" {
   type        = string
   description = "Primary domain for ingress"
 }
+
+variable "enable_gpu_node_group" {
+  type        = bool
+  description = "Enable GPU node group for Ollama"
+  default     = false
+}
+
+variable "gpu_instance_type" {
+  type        = string
+  description = "EC2 instance type for GPU node group"
+  default     = "g4dn.xlarge"
+}
+
+variable "gpu_min_size" {
+  type        = number
+  description = "Minimum size for GPU node group"
+  default     = 0
+}
+
+variable "gpu_max_size" {
+  type        = number
+  description = "Maximum size for GPU node group"
+  default     = 2
+}
+
+variable "gpu_desired_size" {
+  type        = number
+  description = "Desired size for GPU node group"
+  default     = 1
+}
+
+variable "gpu_count" {
+  type        = number
+  description = "Number of GPUs per instance"
+  default     = 1
+}

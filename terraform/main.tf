@@ -54,8 +54,36 @@ module "ingress_waf" {
   domain       = var.domain
 }
 
+module "gpu_node_group" {
+  count = var.enable_gpu_node_group ? 1 : 0
+
+  source = "./modules/gpu-node-group"
+
+  cluster_name    = module.eks.cluster_name
+  cluster_arn     = module.eks.cluster_arn
+  node_group_name = "${var.name}-gpu"
+  node_role_arn   = module.eks.node_role_arn
+  subnets         = module.vpc.private_subnets
+  instance_type   = var.gpu_instance_type
+  min_size        = var.gpu_min_size
+  max_size        = var.gpu_max_size
+  desired_size    = var.gpu_desired_size
+  gpu_count       = var.gpu_count
+}
+
+resource "aws_iam_role_policy_attachment" "nvidia_plugin" {
+  for_each = var.enable_gpu_node_group ? toset(["arn:aws:iam::aws:policy/AmazonEKSClusterPolicy", "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy", "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy", "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly", "arn:aws:iam::aws:policy/AWSMarketplaceGetEntitlements"]) : toset([])
+
+  policy_arn = each.value
+  role       = module.eks.node_role_arn
+}
+
 output "eks_cluster_name" {
   value = module.eks.cluster_name
+}
+
+output "eks_cluster_arn" {
+  value = module.eks.cluster_arn
 }
 
 output "s3_buckets" {
