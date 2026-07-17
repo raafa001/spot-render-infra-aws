@@ -126,12 +126,19 @@ EFS_FILE_SYSTEM_ID=fs-xxxxx ./scripts/deploy-ollama.sh
 OLLAMA_BASE_URL=http://ollama.spot-ai.svc.cluster.local:11434
 ```
 
-### Portal
+### Portal (importante para Spotinho funcionar)
 ```bash
+# URL da API que expõe o /ai/status e /ai/chat
+NEXT_PUBLIC_API_URL=https://api.seu-dominio.com
+# Fallback para chamadas de IA (pode ser igual ao API_URL se a API roteia para Ollama)
+NEXT_PUBLIC_AI_API_URL=https://api.seu-dominio.com
+# URL base do Ollama (para uso direto pelo frontend se necessário)
 NEXT_PUBLIC_OLLAMA_BASE_URL=http://ollama-loadbalancer.amazonaws.com
 ```
 
 Ou configure via ConfigMap/Secret no Kubernetes.
+
+**Nota:** O Spotinho precisa que `NEXT_PUBLIC_AI_API_URL` aponte para a API que tem o endpoint `/ai/status` configurado para conversar com o Ollama interno do cluster.
 
 ## Modelo Padrão
 
